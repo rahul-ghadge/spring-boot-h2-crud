@@ -10,9 +10,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.spring.crud.demo</groupId>
-    <artifactId>spring-boot-crud</artifactId>
+    <artifactId>spring-boot-h2-crud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-boot-crud</name>
+    <name>spring-boot-h2-crud</name>
     <description>Demo project for spring-boot-crud using JPA</description>
 
     <properties>
