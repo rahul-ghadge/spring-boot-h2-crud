@@ -23,8 +23,6 @@ import java.util.List;
 @EnableJpaRepositories
 public class SpringBootH2CRUDApplication {
 
-	//private final Logger log = LoggerFactory.getLogger(getClass());
-
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootH2CRUDApplication.class, args);
 	}

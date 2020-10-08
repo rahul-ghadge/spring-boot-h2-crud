@@ -1,8 +1,11 @@
-# spring-boot-mongodb-crud
+# wq
 
-This project explains CRUD (**C**reate, **R**ead, **U**pdate, **D**elete) operations using MongoTemplate and MongoRepository using spring boot and mongo DB.
-In this app we are using Spring Data JPA for built-in methods to do CRUD operations and Mongo queries using MongoTemplate.     
-`@EnableMongoRepositories` annotation is used on main class to Enable Mongo related configuration, which will read properties from `application.properties` file.
+This project explains CRUD (**C**reate, **R**ead, **U**pdate, **D**elete) operations using spring boot and H2 in-memory database.
+In this app we are using Spring Data JPA for built-in methods to do CRUD operations.     
+`@EnableJpaRepositories` annotation is used on main class to Enable Mongo related configuration, which will read properties from `application.properties` file.
+
+Deployed this application on heroku server, all endpoints are available on 
+## [https://spring-boot-h2-crud.herokuapp.com/](https://spring-boot-h2-crud.herokuapp.com/)
 
 
 
@@ -10,7 +13,7 @@ In this app we are using Spring Data JPA for built-in methods to do CRUD operati
 - Java
 - [Spring Boot](https://spring.io/projects/spring-boot)
 - [Maven](https://maven.apache.org/guides/index.html)
-- [Mongo DB](https://docs.mongodb.com/guides/)
+- [H2 Database](https://www.h2database.com/html/main.html)
 - [Lombok](https://objectcomputing.com/resources/publications/sett/january-2010-reducing-boilerplate-code-with-project-lombok)
 
 
@@ -24,7 +27,7 @@ In this app we are using Spring Data JPA for built-in methods to do CRUD operati
 
 
 ###  Build and Run application
-_GOTO >_ **~/absolute-path-to-directory/spring-boot-mongodb**  
+_GOTO >_ **~/absolute-path-to-directory/spring-boot-h2-crud**  
 and try below command in terminal
 > **```mvn spring-boot:run```** it will run application as spring boot application
 
@@ -32,15 +35,15 @@ or
 > **```mvn clean install```** it will build application and create **jar** file under target directory 
 
 Run jar file from below path with given command
-> **```java -jar ~/path-to-spring-boot-mongodb/target/spring-boot-mongodb-0.0.1-SNAPSHOT.jar```**
+> **```java -jar ~/path-to-spring-boot-h2-crud/target/spring-boot-h2-crud-0.0.1-SNAPSHOT.jar```**
 
 Or
-> run main method from `SpringBootMongoDBApplication.java` as spring boot application.  
+> run main method from `SpringBootH2CRUDApplication.java` as spring boot application.  
 
 
 ||
 |  ---------    |
-| **_Note_** : In `SpringBootMongoDBApplication.java` class we have autowired both SuperHero and Employee repositories. <br/>If there is no record present in DB for any one of that module class (Employee or SuperHero), static data is getting inserted in DB from `HelperUtil.java` class when we are starting the app for the first time.| 
+| **_Note_** : In `SpringBootH2CRUDApplication.java` class we have autowired both SuperHero, Student and Employee repositories. <br/>If there is no record present in DB for any one of that module class (SuperHero, Student and Employee), static data is getting inserted in DB from `HelperUtil.java` class when we are starting the app for the first time.| 
 
 
 
@@ -50,7 +53,13 @@ Or
     ```
     <dependency>
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+   
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <scope>runtime</scope>
     </dependency>
    
     <dependency>
@@ -62,31 +71,44 @@ Or
    
    
 2. #### Properties file
-    Reading Mongo DB related properties from **application.properties** file and configuring Mongo connection factory for mongoDB.  
+    Reading H2 DB related properties from **application.properties** file and configuring JPA connection factory for H2 database.  
 
     **src/main/resources/application.properties**
      ```
-    spring.data.mongodb.host=localhost
-    spring.data.mongodb.port=27017
-    spring.data.mongodb.database=spring_boot_mongo_app
-    spring.jackson.default-property-inclusion=NON_NULL
-    #logging.level.ROOT=DEBUG  
+     server.port=8088
+    
+     spring.datasource.url=jdbc:h2:mem:sampledb
+     spring.datasource.driverClassName=org.h2.Driver
+     spring.datasource.username=sa
+     spring.datasource.password=password
+     spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+    
+     spring.h2.console.enabled=true
+    
+     #spring.data.rest.base-path=/phone
+     spring.data.rest.base-default-page-size=10
+     spring.data.rest.base-max-page-size=20
+    
+     springdoc.version=1.0.0
+     springdoc.swagger-ui.path=/swagger-ui-custom.html 
      ```
    
    
 3. #### Model class
-    Below are the model classes which we will store in MongoDB and perform CRUD operations.  
+    Below are the model classes which we will store in H2 DB and perform CRUD operations.  
     **SuperHero.java**  
     ```
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    @Document(collection = "super_hero")
+    @Entity
+    @Table
     public class SuperHero implements Serializable {
     
         @Id
-        private String id;
+        @GeneratedValue
+        private int id;
     
         private String name;
         private String superName;
@@ -97,25 +119,132 @@ Or
         // Constructor, Getter and Setter
     }
     ```
-    **Employee.java**  
+   
+    **Student.java**
     ```
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public class Employee implements Serializable {
-   
-        @Id
-        private String id;
-       
-        private int empId;
-        private String firstName;
-        private String lastName;
-        private float salary;
-        
-        // Constructor, Getter and Setter
+    @Entity
+    @Table
+    public class Student implements Serializable {
+    
+    	@Id
+    	@GeneratedValue
+    	private int id;
+    
+    	private int rollNo;
+    	private String firstName;
+    	private String lastName;
+    	private float marks;
+    	
     }
-   ```
+    ```
+    
+    **Employee.java**  
+    
+    ```
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @Entity
+    @Table
+    public class Employee implements Serializable {
+    
+        @Id
+        @GeneratedValue
+        private int id;
+        @Column(name = "first_name")
+        private String firstName;
+        @Column(name = "last_name")
+        private String lastName;
+        private int age;
+    
+        @Column(name = "no_of_childrens")
+        private int noOfChildrens;
+        private boolean spouse;
+    
+        @JsonManagedReference
+        @OneToOne(cascade=CascadeType.ALL)
+        @JoinColumn(name="address")
+        private Address address;
+    
+    
+        @JsonManagedReference
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = { CascadeType.ALL})
+        private List<PhoneNumber> phoneNumbers;
+    
+    
+    
+        @ElementCollection
+        @CollectionTable(name="hobbies", joinColumns=@JoinColumn(name="id"))
+        @Column(name="hobby")
+        private List<String> hobbies = new ArrayList<>();
+    
+    }
+    ```
+   
+    **Address.java**
+    
+    ```
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @Entity
+    @Table
+    public class Address implements Serializable {
+    
+        @Id
+        @GeneratedValue
+        private int id;
+    
+        @Column(name = "street_address")
+        private String streetAddress;
+        private String city;
+        private String state;
+        private String country;
+    
+        @Column(name = "postal_address")
+        private String postalCode;
+    
+        @JsonBackReference
+        @OneToOne(mappedBy="address", cascade=CascadeType.ALL)
+        private Employee employee;
+    }
+    ```
+   
+    **PhoneNumber.java**
+    
+    ```
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @Entity
+    @Table
+    public class PhoneNumber implements Serializable {
+    
+        @Id
+        @GeneratedValue
+        private int id;
+        private String type;
+        private String number;
+    
+    
+        @JsonBackReference
+        @ManyToOne(cascade= { CascadeType.ALL})
+        @JoinColumn(name="employee_id")
+        private Employee employee;
+    
+    }
+    ```
+   
    
    
 4. #### CRUD operation for Super Heroes
@@ -150,7 +279,7 @@ Or
     }
     ```
    
-    In **SuperHeroRepository.java**, we are extending `MongoRepository<Class, ID>` interface which enables CRUD related methods.
+    In **SuperHeroRepository.java**, we are extending `JpaRepository<Class, ID>` interface which enables CRUD related methods.
     ```
     public interface SuperHeroRepository extends MongoRepository<SuperHero, String> {
     }
@@ -160,9 +289,52 @@ Or
 
 
 
+   In **EmployeeController.java** class, 
+   we have exposed 5 endpoints for basic CRUD operations
+   - GET All Employee
+   - GET by ID
+   - POST to store Employee in DB
+   - PUT to update Employee
+   - DELETE by ID
+    
+   ```
+   @RestController
+   @RequestMapping("/employees")
+   public class EmployeeController {
+        
+       @GetMapping
+       public ResponseEntity<List<?>> findAll();
+    
+       @GetMapping("/{id}")
+       public ResponseEntity<?> findById(@PathVariable int id);
+    
+       @PostMapping
+       public ResponseEntity<?> save(@RequestBody Employee employee);
+    
+       @PutMapping
+       public ResponseEntity<?> update(@RequestBody Employee employee);
+    
+       @DeleteMapping("/{id}")
+       public ResponseEntity<?> delete(@PathVariable int id);
+   }
+   ```
+   
+   In **EmployeeRepository.java**, we are extending `JpaRepository<Class, ID>` interface which enables CRUD related methods.  
+    
+   ```
+   public interface SuperHeroRepository extends MongoRepository<SuperHero, String> {
+   }
+   ```
+   
+   In **SuperHeroServiceImpl.java**, we are autowiring above interface using `@Autowired` annotation and doing CRUD operation.
+
+
+
+
+
+
 5. #### JPA And Query operation for Employee
-    In **EmployeeController.java** class JPA related queries API Endpoints are placed.
-    In **com.spring.mongo.demo.controller.EmployeeQueryController.java** class Mongo queries API Endpoints are placed.
+    In **StudentController.java** class JPA related operations.
     
  
  
@@ -170,11 +342,11 @@ Or
 ### API Endpoints
 
 - #### Super Hero CRUD Operations
-    > **GET Mapping** http://localhost:8080/super-hero  - Get all Super Heroes
+    > **GET Mapping** http://localhost:8088/super-hero  - Get all Super Heroes
     
-    > **GET Mapping** http://localhost:8080/super-hero/5f380dece02f053eff29b986  - Get Super Hero by ID
+    > **GET Mapping** http://localhost:8088/super-hero/5f380dece02f053eff29b986  - Get Super Hero by ID
        
-    > **POST Mapping** http://localhost:8080/super-hero  - Add new Super Hero in DB  
+    > **POST Mapping** http://localhost:8088/super-hero  - Add new Super Hero in DB  
     
       Request Body  
       ```
@@ -187,7 +359,7 @@ Or
         }
       ```
     
-    > **PUT Mapping** http://localhost:8080/super-hero  - Update existing Super Hero for given ID 
+    > **PUT Mapping** http://localhost:8088/super-hero  - Update existing Super Hero for given ID 
                                                        
       Request Body  
       ```
@@ -201,58 +373,32 @@ Or
         }
       ```
     
-    > **DELETE Mapping** http://localhost:8080/super-hero/5f380dece02f053eff29b986  - Delete Super Hero by ID
+    > **DELETE Mapping** http://localhost:8088/super-hero/5f380dece02f053eff29b986  - Delete Super Hero by ID
 
-- #### Employee Get Operations using JPA
-    > **GET Mapping** http://localhost:8080/student-jpa  - Get all Employees 
+- #### Student Get Operations using JPA
+    > **GET Mapping** http://localhost:8088/student-jpa  - Get all Employees 
     
-    > **GET Mapping** http://localhost:8080/student-jpa/5f380dece02f053eff29b986  - Get Employee by ID
+    > **GET Mapping** http://localhost:8088/student-jpa/5f380dece02f053eff29b986  - Get Student by ID
     
-    > **GET Mapping** http://localhost:8080/student-jpa/firstName/Rahul  - Get All Employees with firstname as Rahul 
+    > **GET Mapping** http://localhost:8088/student-jpa/firstName/Rahul  - Get All Student with firstname as Rahul 
     
-    > **GET Mapping** http://localhost:8080/student-jpa/one-by-firstName/Rahul  - Get **ONE** Employee with firstname as Rahul 
+    > **GET Mapping** http://localhost:8088/student-jpa/one-by-firstName/Rahul  - Get **ONE** Student with firstname as Rahul 
     
-    > **GET Mapping** http://localhost:8080/student-jpa/firstName-like/Rahul  - Get All Employees which contains Rahul in their firstname 
+    > **GET Mapping** http://localhost:8088/student-jpa/firstName-like/Rahul  - Get All Student which contains Rahul in their firstname 
     
-    > **GET Mapping** http://localhost:8080/student-jpa/one-by-lastName/Ghadage  - Get **ONE** Employee with lastname as Ghadage 
+    > **GET Mapping** http://localhost:8088/student-jpa/one-by-lastName/Ghadage  - Get **ONE** Student with lastname as Ghadage 
     
-    > **GET Mapping** http://localhost:8080/student-jpa/salary-greater-than/10000  - Get All Employees whose salary is grater than 1000 
+    > **GET Mapping** http://localhost:8088/student-jpa/salary-greater-than/10000  - Get All Student whose salary is grater than 1000 
     
-    > **POST Mapping** http://localhost:8080/student-jpa/get-by-condition  - Get All Employees with multiple condition 
+    > **POST Mapping** http://localhost:8088/student-jpa/get-by-condition  - Get All Student with multiple condition 
                                                            
     Request Body  
     ```
     {
-        "id": "5f380dece02f053eff29b986"
-        "empId": "1",
+        "rollNo": 1,
         "firstName": "Rahul",
-        "lastName": "Khan",
-        "salary": 5000
+        "lastName": "Ghadage",
+        "marks": 5000
     }
     ``` 
 
-- #### Employee Get Operations using Queries
-    > **GET Mapping** http://localhost:8080/student-query  - Get all Employees 
-    
-    > **GET Mapping** http://localhost:8080/student-query/firstName/Rahul  - Get All Employees with firstname as Rahul 
-    
-    > **GET Mapping** http://localhost:8080/student-query/one-by-firstName/Rahul  - Get **ONE** Employee with firstname as Rahul 
-    
-    > **GET Mapping** http://localhost:8080/student-query/firstName-like/Rahul  - Get All Employees which contains Rahul in their firstname 
-    
-    > **GET Mapping** http://localhost:8080/student-query/one-by-lastName/Ghadage  - Get **ONE** Employee with lastname as Ghadage 
-    
-    > **GET Mapping** http://localhost:8080/student-query/salary-greater-than/10000  - Get All Employees whose salary is grater than 1000 
-    
-    > **POST Mapping** http://localhost:8080/student-query/get-by-condition  - Get All Employees with multiple condition 
-                                                           
-    Request Body  
-    ```
-    {
-        "id": "5f380dece02f053eff29b986"
-        "empId": "1",
-        "firstName": "Rahul",
-        "lastName": "Khan",
-        "salary": 5000
-    }
-    ``` 
