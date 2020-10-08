@@ -204,21 +204,21 @@ Or
     > **DELETE Mapping** http://localhost:8080/super-hero/5f380dece02f053eff29b986  - Delete Super Hero by ID
 
 - #### Employee Get Operations using JPA
-    > **GET Mapping** http://localhost:8080/employee-jpa  - Get all Employees 
+    > **GET Mapping** http://localhost:8080/student-jpa  - Get all Employees 
     
-    > **GET Mapping** http://localhost:8080/employee-jpa/5f380dece02f053eff29b986  - Get Employee by ID
+    > **GET Mapping** http://localhost:8080/student-jpa/5f380dece02f053eff29b986  - Get Employee by ID
     
-    > **GET Mapping** http://localhost:8080/employee-jpa/firstName/Rahul  - Get All Employees with firstname as Rahul 
+    > **GET Mapping** http://localhost:8080/student-jpa/firstName/Rahul  - Get All Employees with firstname as Rahul 
     
-    > **GET Mapping** http://localhost:8080/employee-jpa/one-by-firstName/Rahul  - Get **ONE** Employee with firstname as Rahul 
+    > **GET Mapping** http://localhost:8080/student-jpa/one-by-firstName/Rahul  - Get **ONE** Employee with firstname as Rahul 
     
-    > **GET Mapping** http://localhost:8080/employee-jpa/firstName-like/Rahul  - Get All Employees which contains Rahul in their firstname 
+    > **GET Mapping** http://localhost:8080/student-jpa/firstName-like/Rahul  - Get All Employees which contains Rahul in their firstname 
     
-    > **GET Mapping** http://localhost:8080/employee-jpa/one-by-lastName/Ghadage  - Get **ONE** Employee with lastname as Ghadage 
+    > **GET Mapping** http://localhost:8080/student-jpa/one-by-lastName/Ghadage  - Get **ONE** Employee with lastname as Ghadage 
     
-    > **GET Mapping** http://localhost:8080/employee-jpa/salary-greater-than/10000  - Get All Employees whose salary is grater than 1000 
+    > **GET Mapping** http://localhost:8080/student-jpa/salary-greater-than/10000  - Get All Employees whose salary is grater than 1000 
     
-    > **POST Mapping** http://localhost:8080/employee-jpa/get-by-condition  - Get All Employees with multiple condition 
+    > **POST Mapping** http://localhost:8080/student-jpa/get-by-condition  - Get All Employees with multiple condition 
                                                            
     Request Body  
     ```
@@ -232,19 +232,19 @@ Or
     ``` 
 
 - #### Employee Get Operations using Queries
-    > **GET Mapping** http://localhost:8080/employee-query  - Get all Employees 
+    > **GET Mapping** http://localhost:8080/student-query  - Get all Employees 
     
-    > **GET Mapping** http://localhost:8080/employee-query/firstName/Rahul  - Get All Employees with firstname as Rahul 
+    > **GET Mapping** http://localhost:8080/student-query/firstName/Rahul  - Get All Employees with firstname as Rahul 
     
-    > **GET Mapping** http://localhost:8080/employee-query/one-by-firstName/Rahul  - Get **ONE** Employee with firstname as Rahul 
+    > **GET Mapping** http://localhost:8080/student-query/one-by-firstName/Rahul  - Get **ONE** Employee with firstname as Rahul 
     
-    > **GET Mapping** http://localhost:8080/employee-query/firstName-like/Rahul  - Get All Employees which contains Rahul in their firstname 
+    > **GET Mapping** http://localhost:8080/student-query/firstName-like/Rahul  - Get All Employees which contains Rahul in their firstname 
     
-    > **GET Mapping** http://localhost:8080/employee-query/one-by-lastName/Ghadage  - Get **ONE** Employee with lastname as Ghadage 
+    > **GET Mapping** http://localhost:8080/student-query/one-by-lastName/Ghadage  - Get **ONE** Employee with lastname as Ghadage 
     
-    > **GET Mapping** http://localhost:8080/employee-query/salary-greater-than/10000  - Get All Employees whose salary is grater than 1000 
+    > **GET Mapping** http://localhost:8080/student-query/salary-greater-than/10000  - Get All Employees whose salary is grater than 1000 
     
-    > **POST Mapping** http://localhost:8080/employee-query/get-by-condition  - Get All Employees with multiple condition 
+    > **POST Mapping** http://localhost:8080/student-query/get-by-condition  - Get All Employees with multiple condition 
                                                            
     Request Body  
     ```

@@ -14,15 +14,15 @@ import java.io.Serializable;
 @Builder
 @Entity
 @Table
-public class Employee implements Serializable {
+public class Student implements Serializable {
 
 	@Id
 	@GeneratedValue
 	private int id;
 
-	private int empId;
+	private int rollNo;
 	private String firstName;
 	private String lastName;
-	private float salary;
+	private float marks;
 	
 }

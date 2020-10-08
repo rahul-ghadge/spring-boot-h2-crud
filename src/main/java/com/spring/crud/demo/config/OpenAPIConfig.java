@@ -1,6 +1,7 @@
 package com.spring.crud.demo.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,8 @@ public class OpenAPIConfig {
         return new OpenAPI()
                 .info(new Info().title("CRUD API")
                 .version(appVersion)
+                 .contact(new Contact().name("Rahul Ghadage")
+                         .url("https://github.com/rahul-ghadge"))
                 .description("This is a sample CRUD application using spring data")
                 .termsOfService("http://swagger.io/terms/")
                 .license(new License().name("Apache 2.0").url("http://springdoc.org")));

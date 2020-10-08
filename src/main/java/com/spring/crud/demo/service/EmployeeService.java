@@ -1,26 +1,18 @@
 package com.spring.crud.demo.service;
 
+import com.spring.crud.demo.model.emp.Employee;
 
 import java.util.List;
 
-import com.spring.crud.demo.model.Employee;
-
 public interface EmployeeService {
-	
-	List<Employee> getAll();
 
-	List<Employee> getEmployeeByFirstName(String firstName);
+    List<?> findAll();
 
-	Employee getOneEmployeeByFirstName(String firstName);
+    Employee findById(int id);
 
-	List<Employee> getEmployeeByFirstNameLike(String firstName);
+    Employee save(Employee superHero);
 
-	Employee getEmployeeById(int empId);
-	
-	Employee getEmployeeByLastName(String lastName);
+    Employee update(Employee superHero);
 
-	List<Employee> getEmployeeBySalaryGreaterThan(int salary);
-	
-	List<Employee> getEmployeeByCondition(Employee employee);
-
+    void delete(int id);
 }
