@@ -1,4 +1,4 @@
-# wq
+# spring-boot-h2-crud
 
 This project explains CRUD (**C**reate, **R**ead, **U**pdate, **D**elete) operations using spring boot and H2 in-memory database.
 In this app we are using Spring Data JPA for built-in methods to do CRUD operations.     
