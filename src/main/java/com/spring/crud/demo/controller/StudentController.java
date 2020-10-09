@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.spring.crud.demo.service.StudentService;
 
 @RestController
-@RequestMapping("/employee-jpa")
+@RequestMapping("/student-jpa")
 public class StudentController {
 	
 	@Autowired
@@ -26,42 +26,42 @@ public class StudentController {
 	}
 	
 
-	@GetMapping("/{empId}")
-	public Student getEmployeeById(@PathVariable int empId ) {
-		return studentService.getEmployeeById(empId);
+	@GetMapping("/{rollNo}")
+	public Student getStudentById(@PathVariable int rollNo ) {
+		return studentService.getStudentById(rollNo);
 	}
 	
 	@GetMapping("/firstName/{firstName}")
-	public List<Student> getEmployeeByName(@PathVariable String firstName ) {
-		return studentService.getEmployeeByFirstName(firstName);
+	public List<Student> getStudentByName(@PathVariable String firstName ) {
+		return studentService.getStudentByFirstName(firstName);
 	}
 
-	// get employee by first name (equals())
+	// get Student by first name (equals())
 	@GetMapping("/one-by-firstName/{firstName}")
-	public Student getOneEmployeeByFirstName(@PathVariable String firstName) {
-		return studentService.getOneEmployeeByFirstName(firstName);
+	public Student getOneStudentByFirstName(@PathVariable String firstName) {
+		return studentService.getOneStudentByFirstName(firstName);
 	}
 
-	// get employee by first name %LIKE%
+	// get Student by first name %LIKE%
 	@GetMapping("/firstName-like/{firstName}")
-	public List<Student> getEmployeeByFirstNameLike(@PathVariable String firstName) {
-		return studentService.getEmployeeByFirstNameLike(firstName);
+	public List<Student> getStudentByFirstNameLike(@PathVariable String firstName) {
+		return studentService.getStudentByFirstNameLike(firstName);
 	}
 
 	@GetMapping("/one-by-lastName/{lastName}")
-	public Student getEmployeeBylName(@PathVariable String lastName) {
-		return studentService.getEmployeeByLastName(lastName);
+	public Student getStudentBylName(@PathVariable String lastName) {
+		return studentService.getStudentByLastName(lastName);
 	}
 
 
 	@GetMapping("/salary-greater-than/{salary}")
-	public List<Student> getEmployeeBySalaryGreaterThan(@PathVariable int salary) {
-		return studentService.getEmployeeBySalaryGreaterThan(salary);
+	public List<Student> getStudentBySalaryGreaterThan(@PathVariable int salary) {
+		return studentService.getStudentBySalaryGreaterThan(salary);
 	}
 	
 	@PostMapping("/get-by-condition")
-	public List<Student> getEmployeeByCondition(@RequestBody Student student) {
-		return studentService.getEmployeeByCondition(student);
+	public List<Student> getStudentByCondition(@RequestBody Student student) {
+		return studentService.getStudentByCondition(student);
 	}
 }
 

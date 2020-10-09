@@ -17,16 +17,16 @@ public class HelperUtil {
 
     public static Supplier<List<Student>> studentSupplier = () ->
             Arrays.asList(
-		            Student.builder().rollNo(1).firstName("Binay").lastName("Gurung").marks(3000.0f).build(),
-		            Student.builder().rollNo(2).firstName("Rahul").lastName("Ghadage").marks(4000.0f).build(),
-		            Student.builder().rollNo(3).firstName("Sunny").lastName("Deol").marks(5000.0f).build(),
-		            Student.builder().rollNo(4).firstName("Salman").lastName("Khan").marks(6000.0f).build(),
-		            Student.builder().rollNo(5).firstName("Aamir").lastName("Khan").marks(7000.0f).build(),
-		            Student.builder().rollNo(6).firstName("Shahrukh").lastName("Khan").marks(8000.0f).build(),
-		            Student.builder().rollNo(7).firstName("Ranbir").lastName("Kapoor").marks(9000.0f).build(),
-		            Student.builder().rollNo(8).firstName("Ranveer").lastName("Singh").marks(10000.0f).build(),
-		            Student.builder().rollNo(9).firstName("Akshay").lastName("Kumar").marks(11000.0f).build(),
-		            Student.builder().rollNo(10).firstName("Ajay").lastName("Devgan").marks(12000.0f).build()
+		            Student.builder().rollNo(1).firstName("Binay").lastName("Gurung").marks(300.0f).build(),
+		            Student.builder().rollNo(2).firstName("Rahul").lastName("Ghadage").marks(950.0f).build(),
+		            Student.builder().rollNo(3).firstName("Sunny").lastName("Deol").marks(500.0f).build(),
+		            Student.builder().rollNo(4).firstName("Salman").lastName("Khan").marks(600.0f).build(),
+		            Student.builder().rollNo(5).firstName("Aamir").lastName("Khan").marks(700.0f).build(),
+		            Student.builder().rollNo(6).firstName("Shahrukh").lastName("Khan").marks(800.0f).build(),
+		            Student.builder().rollNo(7).firstName("Ranbir").lastName("Kapoor").marks(900.0f).build(),
+		            Student.builder().rollNo(8).firstName("Ranveer").lastName("Singh").marks(800.0f).build(),
+		            Student.builder().rollNo(9).firstName("Akshay").lastName("Kumar").marks(900.0f).build(),
+		            Student.builder().rollNo(10).firstName("Ajay").lastName("Devgan").marks(800.0f).build()
             );
 
 
@@ -45,7 +45,7 @@ public class HelperUtil {
 
 	public static Supplier<List<Employee>> employeeSupplier = () -> {
 
-		Employee employee = Employee.builder()
+		Employee rahul = Employee.builder()
 				.id(1)
 				.firstName("Rahul")
 				.lastName("Ghadage")
@@ -64,15 +64,49 @@ public class HelperUtil {
 				.hobbies(Arrays.asList("Coding", "Reading"))
 				.build();
 
-		PhoneNumber phoneNumber = PhoneNumber.builder()
+		PhoneNumber rahulsNo = PhoneNumber.builder()
 				.id(1)
 				.type("Mobile")
 				.number("1234567890")
-				.employee(employee)
+				.employee(rahul)
 				.build();
 
-		employee.setPhoneNumbers(Arrays.asList(phoneNumber));
+		rahul.setPhoneNumbers(Arrays.asList(rahulsNo));
 
-		return Arrays.asList(employee);
+
+
+
+
+
+		Employee aryan = Employee.builder()
+				.id(1)
+				.firstName("Aryan")
+				.lastName("Ghadage")
+				.age(28)
+				.noOfChildrens(0)
+				.spouse(true)
+				.address(Address.builder()
+						.id(1)
+						.streetAddress("A road")
+						.city("Pune")
+						.state("Maharashtra")
+						.country("India")
+						.postalCode("411018")
+						.build()
+				)
+				.hobbies(Arrays.asList("Dancing", "Cooking"))
+				.build();
+
+		PhoneNumber aryansNumber = PhoneNumber.builder()
+				.id(1)
+				.type("Mobile")
+				.number("1234555555")
+				.employee(aryan)
+				.build();
+
+		aryan.setPhoneNumbers(Arrays.asList(aryansNumber));
+
+
+		return Arrays.asList(rahul, aryan);
 	};
 }

@@ -9,18 +9,18 @@ public interface StudentService {
 	
 	List<Student> getAll();
 
-	List<Student> getEmployeeByFirstName(String firstName);
+	List<Student> getStudentByFirstName(String firstName);
 
-	Student getOneEmployeeByFirstName(String firstName);
+	Student getOneStudentByFirstName(String firstName);
 
-	List<Student> getEmployeeByFirstNameLike(String firstName);
+	List<Student> getStudentByFirstNameLike(String firstName);
 
-	Student getEmployeeById(int empId);
+	Student getStudentById(int empId);
 	
-	Student getEmployeeByLastName(String lastName);
+	Student getStudentByLastName(String lastName);
 
-	List<Student> getEmployeeBySalaryGreaterThan(int salary);
+	List<Student> getStudentBySalaryGreaterThan(int salary);
 	
-	List<Student> getEmployeeByCondition(Student student);
+	List<Student> getStudentByCondition(Student student);
 
 }

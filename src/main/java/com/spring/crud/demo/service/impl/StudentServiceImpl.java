@@ -25,7 +25,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 	
 	@Override
-	public Student getEmployeeByLastName(String lastName) {
+	public Student getStudentByLastName(String lastName) {
 		
 		List<Student> students = repository.findAll();
 		
@@ -37,7 +37,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Student getEmployeeById(int empId) {
+	public Student getStudentById(int empId) {
 		List<Student> students = repository.findAll();
 		for (Student emp : students) {
 			if (empId == emp.getRollNo())
@@ -47,7 +47,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public List<Student> getEmployeeByFirstName(String firstName) {
+	public List<Student> getStudentByFirstName(String firstName) {
 		List<Student> students = new ArrayList<>();
 		List<Student> list = repository.findAll();
 		for (Student emp : list) {
@@ -58,44 +58,44 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Student getOneEmployeeByFirstName(String firstName) {
+	public Student getOneStudentByFirstName(String firstName) {
 		return repository.findByFirstName(firstName);
 	}
 
 	@Override
-	public List<Student> getEmployeeByFirstNameLike(String firstName) {
+	public List<Student> getStudentByFirstNameLike(String firstName) {
 		return repository.findByFirstNameLike(firstName);
 	}
 
 //	@Override
-//	public Student getEmployeeByFirstName(Student employee) {
+//	public Student getStudentByFirstName(Student student) {
 //		List<Student> list = repository.findAll();
 //		for (Student emp : list) {
-//			if (emp.getFirstName().equals(employee.getFirstName()))
+//			if (emp.getFirstName().equals(student.getFirstName()))
 //				return emp;
 //		}
 //		return Student.builder().empId(0).firstName("Not Found").lastName("Please enter valid id").salary(0f).build();
 //	}
 //
 //	@Override
-//	public List<Student> getEmployeeByFrName(Student employee) {
-//		List<Student> employees = new ArrayList<>();
+//	public List<Student> getStudentByFrName(Student student) {
+//		List<Student> students = new ArrayList<>();
 //
-//		if (null != employee && null != employee.getFirstName()
-//				&& !(employee.getFirstName().equals(""))) {
+//		if (null != student && null != student.getFirstName()
+//				&& !(student.getFirstName().equals(""))) {
 //			List<Student> list = repository.findAll();
 //
 //			for (Student emp : list) {
-//				if (emp.getFirstName().toLowerCase().contains(employee.getFirstName().toLowerCase())) {
-//					employees.add(emp);
+//				if (emp.getFirstName().toLowerCase().contains(student.getFirstName().toLowerCase())) {
+//					students.add(emp);
 //				}
 //			}
 //		}
-//		return employees;
+//		return students;
 //	}
 
 	@Override
-	public List<Student> getEmployeeBySalaryGreaterThan(int salary) {
+	public List<Student> getStudentBySalaryGreaterThan(int salary) {
 		List<Student> students = new ArrayList<>();
 
 		if (salary > 0) {
@@ -113,7 +113,7 @@ public class StudentServiceImpl implements StudentService {
 	
 	
 	@Override
-	public List<Student> getEmployeeByCondition(Student student) {
+	public List<Student> getStudentByCondition(Student student) {
 		List<Student> list = repository.findAll();
 		List<Student> students = new ArrayList<>();
 

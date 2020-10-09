@@ -344,7 +344,7 @@ Or
 - #### Super Hero CRUD Operations
     > **GET Mapping** http://localhost:8088/super-hero  - Get all Super Heroes
     
-    > **GET Mapping** http://localhost:8088/super-hero/5f380dece02f053eff29b986  - Get Super Hero by ID
+    > **GET Mapping** http://localhost:8088/super-hero/1  - Get Super Hero by ID
        
     > **POST Mapping** http://localhost:8088/super-hero  - Add new Super Hero in DB  
     
@@ -364,7 +364,7 @@ Or
       Request Body  
       ```
         {
-            "id": "5f380dece02f053eff29b986"
+            "id": "3"
             "name": "Tony",
             "superName": "Iron Man",
             "profession": "Business",
@@ -373,12 +373,12 @@ Or
         }
       ```
     
-    > **DELETE Mapping** http://localhost:8088/super-hero/5f380dece02f053eff29b986  - Delete Super Hero by ID
+    > **DELETE Mapping** http://localhost:8088/super-hero/4  - Delete Super Hero by ID
 
 - #### Student Get Operations using JPA
     > **GET Mapping** http://localhost:8088/student-jpa  - Get all Employees 
     
-    > **GET Mapping** http://localhost:8088/student-jpa/5f380dece02f053eff29b986  - Get Student by ID
+    > **GET Mapping** http://localhost:8088/student-jpa/2  - Get Student by ID
     
     > **GET Mapping** http://localhost:8088/student-jpa/firstName/Rahul  - Get All Student with firstname as Rahul 
     
@@ -388,17 +388,17 @@ Or
     
     > **GET Mapping** http://localhost:8088/student-jpa/one-by-lastName/Ghadage  - Get **ONE** Student with lastname as Ghadage 
     
-    > **GET Mapping** http://localhost:8088/student-jpa/salary-greater-than/10000  - Get All Student whose salary is grater than 1000 
+    > **GET Mapping** http://localhost:8088/student-jpa/marks-greater-than/100  - Get All Student whose marks is grater than 100  
     
     > **POST Mapping** http://localhost:8088/student-jpa/get-by-condition  - Get All Student with multiple condition 
                                                            
     Request Body  
     ```
     {
-        "rollNo": 1,
+        "rollNo": 10,
         "firstName": "Rahul",
         "lastName": "Ghadage",
-        "marks": 5000
+        "marks": 950
     }
     ``` 
 
