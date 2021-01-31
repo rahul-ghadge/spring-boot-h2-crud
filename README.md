@@ -2,7 +2,7 @@
 
 This project explains CRUD (**C**reate, **R**ead, **U**pdate, **D**elete) operations using spring boot and H2 in-memory database.
 In this app we are using Spring Data JPA for built-in methods to do CRUD operations.     
-`@EnableJpaRepositories` annotation is used on main class to Enable Mongo related configuration, which will read properties from `application.properties` file.
+`@EnableJpaRepositories` annotation is used on main class to Enable H2 DB related configuration, which will read properties from `application.properties` file.
 
 Deployed this application on heroku server, all endpoints are available on 
 ## [https://spring-boot-h2-crud.herokuapp.com/](https://spring-boot-h2-crud.herokuapp.com/)
@@ -49,7 +49,7 @@ Or
 
 ### Code Snippets
 1. #### Maven Dependencies
-    Need to add below dependencies to enable Mongo related config in **pom.xml**. Lombok's dependency is to get rid of boiler-plate code.   
+    Need to add below dependencies to enable H2 DB related config in **pom.xml**. Lombok's dependency is to get rid of boiler-plate code.   
     ```
     <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -281,7 +281,7 @@ Or
    
     In **SuperHeroRepository.java**, we are extending `JpaRepository<Class, ID>` interface which enables CRUD related methods.
     ```
-    public interface SuperHeroRepository extends MongoRepository<SuperHero, String> {
+    public interface SuperHeroRepository extends JpaRepository<SuperHero, String> {
     }
     ```
    
@@ -322,7 +322,7 @@ Or
    In **EmployeeRepository.java**, we are extending `JpaRepository<Class, ID>` interface which enables CRUD related methods.  
     
    ```
-   public interface SuperHeroRepository extends MongoRepository<SuperHero, String> {
+   public interface SuperHeroRepository extends JpaRepository<SuperHero, String> {
    }
    ```
    

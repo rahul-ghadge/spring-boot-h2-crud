@@ -12,7 +12,7 @@ import java.net.URI;
 public class DefaultController {
 
 
-    @Operation(summary = "Swagger documentation url")
+    @Operation(summary = "Swagger documentation url", hidden = true)
     @GetMapping
     ResponseEntity<Void> redirect() {
         return ResponseEntity.status(HttpStatus.FOUND)
@@ -20,7 +20,7 @@ public class DefaultController {
                 .build();
     }
 
-    @Operation(summary = "Database url")
+    @Operation(summary = "Database url", hidden = true)
     @GetMapping("/database")
     public ResponseEntity<Void> databaseUrl() {
         return ResponseEntity.status(HttpStatus.FOUND)
