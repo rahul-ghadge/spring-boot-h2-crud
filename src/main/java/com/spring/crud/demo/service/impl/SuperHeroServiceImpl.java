@@ -5,6 +5,7 @@ import com.spring.crud.demo.repository.SuperHeroRepository;
 import com.spring.crud.demo.service.SuperHeroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class SuperHeroServiceImpl implements SuperHeroService {
     }
 
     @Override
-    public SuperHero findById(String id) {
-        return repository.findById(id).orElse(new SuperHero());
+    public SuperHero findById(int id) {
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("** Superhero not found for id :: " + id));
     }
 
     @Override
@@ -30,12 +31,14 @@ public class SuperHeroServiceImpl implements SuperHeroService {
     }
 
     @Override
-    public SuperHero update(SuperHero superHero) {
+    public SuperHero update(int id, SuperHero superHero) {
+    	repository.findById(id).orElseThrow(() -> new NotFoundException("** Superhero not found for id :: " + id));
+    	superHero.setId(id);
         return repository.save(superHero);
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(int id) {
        repository.findById(id).ifPresent(superHero -> repository.delete(superHero));
     }
 }

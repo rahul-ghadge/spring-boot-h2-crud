@@ -5,6 +5,7 @@ import com.spring.crud.demo.repository.EmployeeRepository;
 import com.spring.crud.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findById(int id) {
-        return repository.findById(id).orElse(new Employee());
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("** Employee not found for id :: " + id));
     }
 
     @Override
@@ -30,8 +31,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee update(Employee employee) {
-        return repository.save(employee);
+    public Employee update(int id, Employee employee) {
+    	repository.findById(id).orElseThrow(() -> new NotFoundException("** Employee not found for id :: " + id));
+        
+    	employee.setId(id);
+    	return repository.save(employee);
     }
 
     @Override

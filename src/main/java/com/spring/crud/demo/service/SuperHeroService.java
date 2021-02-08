@@ -8,11 +8,11 @@ public interface SuperHeroService {
 
     List<?> findAll();
 
-    SuperHero findById(String id);
+    SuperHero findById(int id);
 
     SuperHero save(SuperHero superHero);
 
-    SuperHero update(SuperHero superHero);
+    SuperHero update(int id, SuperHero superHero);
 
-    void delete(String id);
+    void delete(int id);
 }

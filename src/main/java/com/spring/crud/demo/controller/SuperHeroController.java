@@ -24,7 +24,7 @@ public class SuperHeroController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable String id) {
+    public ResponseEntity<?> findById(@PathVariable int id) {
         SuperHero superHero = superHeroService.findById(id);
         return ResponseEntity.ok().body(superHero);
     }
@@ -37,15 +37,15 @@ public class SuperHeroController {
     }
 
 
-    @PutMapping
-    public ResponseEntity<?> update(@RequestBody SuperHero superHero) {
-        SuperHero updatedSuperHero = superHeroService.update(superHero);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable int id, @RequestBody SuperHero superHero) {
+        SuperHero updatedSuperHero = superHeroService.update(id, superHero);
         return ResponseEntity.ok().body(updatedSuperHero);
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable String id) {
+    public ResponseEntity<?> delete(@PathVariable int id) {
         superHeroService.delete(id);
         return ResponseEntity.ok().body("Deleted successfully...!");
     }
