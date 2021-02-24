@@ -271,8 +271,8 @@ Or
         @PostMapping
         public ResponseEntity<?> save(@RequestBody SuperHero superHero);
     
-        @PutMapping
-        public ResponseEntity<?> update(@RequestBody SuperHero superHero);
+        @PutMapping("/{id}")
+        public ResponseEntity<?> update(@PathVariable int id, @RequestBody SuperHero superHero);
     
         @DeleteMapping("/{id}")
         public ResponseEntity<?> delete(@PathVariable String id);
@@ -311,8 +311,8 @@ Or
        @PostMapping
        public ResponseEntity<?> save(@RequestBody Employee employee);
     
-       @PutMapping
-       public ResponseEntity<?> update(@RequestBody Employee employee);
+       @PutMapping("/{id}")
+       public ResponseEntity<?> update(@PathVariable int id, @RequestBody Employee employee);
     
        @DeleteMapping("/{id}")
        public ResponseEntity<?> delete(@PathVariable int id);
@@ -359,7 +359,7 @@ Or
         }
       ```
     
-    > **PUT Mapping** http://localhost:8088/super-hero  - Update existing Super Hero for given ID 
+    > **PUT Mapping** http://localhost:8088/super-hero/3  - Update existing Super Hero for given ID 
                                                        
       Request Body  
       ```
