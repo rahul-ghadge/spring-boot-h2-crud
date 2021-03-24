@@ -322,7 +322,7 @@ Or
    In **EmployeeRepository.java**, we are extending `JpaRepository<Class, ID>` interface which enables CRUD related methods.  
     
    ```
-   public interface SuperHeroRepository extends JpaRepository<SuperHero, String> {
+   public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
    }
    ```
    
