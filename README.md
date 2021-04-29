@@ -4,6 +4,8 @@ This project explains CRUD (**C**reate, **R**ead, **U**pdate, **D**elete) operat
 In this app we are using Spring Data JPA for built-in methods to do CRUD operations.     
 `@EnableJpaRepositories` annotation is used on main class to Enable H2 DB related configuration, which will read properties from `application.properties` file.
 
+Also, recently added **Spring Reactive programming** support in this application. All reactive classes/interfaces are added with prefix as `Reactive*`.
+
 Deployed this application on heroku server, all endpoints are available on 
 ## [https://spring-boot-h2-crud.herokuapp.com/](https://spring-boot-h2-crud.herokuapp.com/)
 
@@ -18,7 +20,7 @@ Deployed this application on heroku server, all endpoints are available on
 
 
 ## Tools
-- Eclipse or IntelliJ IDEA (or any preferred IDE) with embedded Gradle
+- Eclipse or IntelliJ IDEA (or any preferred IDE) with embedded Maven
 - Maven (version >= 3.6.0)
 - Postman (or any RESTful API testing tool)
 
@@ -68,6 +70,21 @@ Or
         <optional>true</optional>
     </dependency>
     ```
+   
+   Added Reactive spring support with below dependencies in this application.
+    ```
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>
+   
+    <dependency>
+        <groupId>io.projectreactor</groupId>
+        <artifactId>reactor-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+    ```
+    
    
    
 2. #### Properties file
@@ -279,15 +296,52 @@ Or
     }
     ```
    
-    In **SuperHeroRepository.java**, we are extending `JpaRepository<Class, ID>` interface which enables CRUD related methods.
+   In **SuperHeroServiceImpl.java**, we are autowiring above interface using `@Autowired` annotation and doing CRUD operation.
+    
+    <br/>
+    <br/>
+    
+    In **ReactiveSuperHeroController.java** class, 
+    we have exposed 5 endpoints for basic CRUD operations with spring reactive feature
+    - GET All Super Heroes
+    - GET by ID
+    - POST to store Super Hero in DB
+    - PUT to update Super Hero
+    - DELETE by ID
+       
     ```
-    public interface SuperHeroRepository extends JpaRepository<SuperHero, String> {
+    @RestController
+    @RequestMapping("/reactive/super-hero")
+    public class ReactiveSuperHeroController {
+           
+        @GetMapping(path = "/", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+        public ResponseEntity<Flux<?>> findAll();
+       
+        @GetMapping("/{id}")
+        public ResponseEntity<?> findById(@PathVariable String id);
+       
+        @PostMapping
+        public ResponseEntity<?> save(@RequestBody SuperHero superHero);
+       
+        @PutMapping("/{id}")
+        public ResponseEntity<?> update(@PathVariable int id, @RequestBody SuperHero superHero);
+       
+        @DeleteMapping("/{id}")
+        public ResponseEntity<?> delete(@PathVariable String id);
     }
     ```
+
+
+
    
-   In **SuperHeroServiceImpl.java**, we are autowiring above interface using `@Autowired` annotation and doing CRUD operation.
-
-
+    In **SuperHeroRepository.java**, we are extending `JpaRepository<Class, ID>` interface which enables CRUD related methods.
+    
+   ```
+   public interface SuperHeroRepository extends JpaRepository<SuperHero, String> {
+   }
+   ```
+    
+   
 
    In **EmployeeController.java** class, 
    we have exposed 5 endpoints for basic CRUD operations
@@ -348,8 +402,8 @@ Or
        
     > **POST Mapping** http://localhost:8088/super-hero  - Add new Super Hero in DB  
     
-      Request Body  
-      ```
+     Request Body  
+     ```
         {
             "name": "Tony",
             "superName": "Iron Man",
@@ -357,12 +411,12 @@ Or
             "age": 50,
             "canFly": true
         }
-      ```
+     ```
     
     > **PUT Mapping** http://localhost:8088/super-hero/3  - Update existing Super Hero for given ID 
                                                        
-      Request Body  
-      ```
+     Request Body  
+     ```
         {
             "id": "3"
             "name": "Tony",
@@ -371,9 +425,46 @@ Or
             "age": 50,
             "canFly": true
         }
-      ```
+     ```
     
     > **DELETE Mapping** http://localhost:8088/super-hero/4  - Delete Super Hero by ID
+
+- #### Reactive Super Hero CRUD Operations
+    > ###### **GET Mapping** http://localhost:8088/reactive/super-hero  - Get all Super Heroes 
+    
+     ## **(Try above endpoint in Chrome to see magic, Postman currently not supporting reactive programming)**
+    
+    > **GET Mapping** http://localhost:8088/reactive/super-hero/1  - Get Super Hero by ID
+       
+    > **POST Mapping** http://localhost:8088/reactive/super-hero  - Add new Super Hero in DB  
+    
+     Request Body  
+     ```
+        {
+            "name": "Tony",
+            "superName": "Iron Man",
+            "profession": "Business",
+            "age": 50,
+            "canFly": true
+        }
+     ```
+    
+    > **PUT Mapping** http://localhost:8088/reactive/super-hero/3  - Update existing Super Hero for given ID 
+                                                       
+     Request Body  
+     ```
+        {
+            "id": "3"
+            "name": "Tony",
+            "superName": "Iron Man",
+            "profession": "Business",
+            "age": 50,
+            "canFly": true
+        }
+     ```
+    
+    > **DELETE Mapping** http://localhost:8088/reactive/super-hero/4  - Delete Super Hero by ID
+
 
 - #### Student Get Operations using JPA
     > **GET Mapping** http://localhost:8088/student-jpa  - Get all Employees 
