@@ -4,7 +4,7 @@ This project explains CRUD (**C**reate, **R**ead, **U**pdate, **D**elete) operat
 In this app we are using Spring Data JPA for built-in methods to do CRUD operations.     
 `@EnableJpaRepositories` annotation is used on main class to Enable H2 DB related configuration, which will read properties from `application.properties` file.
 
-Also, recently added **Spring Reactive programming** support in this application. All reactive classes/interfaces are added with prefix as `Reactive*`.
+Also, recently added **Spring Reactive programming** support with the help of **Spring Webflux** in this application. All reactive classes/interfaces are added with prefix as `Reactive*`.
 
 Deployed this application on heroku server, all endpoints are available on 
 ## [https://spring-boot-h2-crud.herokuapp.com/](https://spring-boot-h2-crud.herokuapp.com/)
