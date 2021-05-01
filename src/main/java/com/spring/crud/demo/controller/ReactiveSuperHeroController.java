@@ -26,29 +26,26 @@ public class ReactiveSuperHeroController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable int id) {
-        Mono<SuperHero> superHero = reactiveSuperHeroService.findById(id);
-        return ResponseEntity.ok().body(superHero);
+    public Mono<?> findById(@PathVariable int id) {
+        return reactiveSuperHeroService.findById(id);
     }
 
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody SuperHero superHero) {
-        Mono<SuperHero> savedSuperHero = reactiveSuperHeroService.save(superHero);
-        return ResponseEntity.ok().body(savedSuperHero);
+    public Mono<?> save(@RequestBody SuperHero superHero) {
+        return reactiveSuperHeroService.save(superHero);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable int id, @RequestBody SuperHero superHero) {
-        Mono<SuperHero> updatedSuperHero = reactiveSuperHeroService.update(id, superHero);
-        return ResponseEntity.ok().body(updatedSuperHero);
+    public Mono<?> update(@PathVariable int id, @RequestBody SuperHero superHero) {
+        return reactiveSuperHeroService.update(id, superHero);
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable int id) {
+    public Mono<?> delete(@PathVariable int id) {
         Mono<Void> monoVoid = reactiveSuperHeroService.delete(id);
-        return ResponseEntity.ok().body("Deleted successfully...!");
+        return Mono.just("Deleted successfully...!");
     }
 }
