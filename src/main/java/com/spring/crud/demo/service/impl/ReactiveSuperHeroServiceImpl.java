@@ -31,8 +31,9 @@ public class ReactiveSuperHeroServiceImpl implements ReactiveSuperHeroService {
 
         return Flux.fromIterable(superHeroes)
                 .delayElements(Duration.ofSeconds(1))
-                .doOnNext(superHero -> log.info(String.valueOf(superHero)))
-                .map(superHero -> superHero);
+                .doOnNext(superHero -> log.info("*** {}", superHero))
+                .map(superHero -> superHero)
+                .log();     // log() to print event stream on console. Check console for event logs
     }
 
     @Override
@@ -40,7 +41,8 @@ public class ReactiveSuperHeroServiceImpl implements ReactiveSuperHeroService {
         //return reactiveSuperHeroRepository.findById(id).switchIfEmpty(Mono.error(new NotFoundException("** Superhero not found for id :: " + id)));
 
         SuperHero superHero = repository.findById(id).orElseThrow(() -> new NotFoundException("** Superhero not found for id :: " + id));
-        return Mono.just(superHero);
+        return Mono.just(superHero)
+                .log();     // log() to print event stream on console. Check console for event logs
     }
 
     @Override
@@ -48,7 +50,8 @@ public class ReactiveSuperHeroServiceImpl implements ReactiveSuperHeroService {
         //return reactiveSuperHeroRepository.save(superHero);
 
         superHero = repository.save(superHero);
-        return Mono.just(superHero);
+        return Mono.just(superHero)
+                .log();     // log() to print event stream on console. Check console for event logs
     }
 
     @Override
