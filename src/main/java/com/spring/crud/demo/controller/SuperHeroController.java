@@ -6,7 +6,9 @@ import com.spring.crud.demo.service.SuperHeroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -33,7 +35,14 @@ public class SuperHeroController {
     @PostMapping
     public ResponseEntity<?> save(@RequestBody SuperHero superHero) {
         SuperHero savedSuperHero = superHeroService.save(superHero);
-        return ResponseEntity.ok().body(savedSuperHero);
+        
+//        return ResponseEntity.ok().body(savedSuperHero);
+        
+        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+        		.path("/{id}")
+        		.buildAndExpand(savedSuperHero.getId())
+        		.toUri();
+        return ResponseEntity.created(uri).body(savedSuperHero);
     }
 
 

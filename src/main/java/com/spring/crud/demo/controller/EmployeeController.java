@@ -5,7 +5,9 @@ import com.spring.crud.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -32,7 +34,14 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<?> save(@RequestBody Employee employee) {
         Employee savedEmployee = service.save(employee);
-        return ResponseEntity.ok().body(savedEmployee);
+        
+//        return ResponseEntity.ok().body(savedEmployee);
+        
+        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+        		.path("/{id}")
+        		.buildAndExpand(savedEmployee.getId())
+        		.toUri();
+        return ResponseEntity.created(uri).body(savedEmployee);
     }
 
 

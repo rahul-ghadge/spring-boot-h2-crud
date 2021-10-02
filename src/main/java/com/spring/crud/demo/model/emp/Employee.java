@@ -31,19 +31,28 @@ public class Employee implements Serializable {
     private boolean spouse;
 
     @JsonManagedReference
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = { 
+        		CascadeType.MERGE,
+   	    		CascadeType.PERSIST,
+   	    		CascadeType.REMOVE
+    })
     @JoinColumn(name="address")
     private Address address;
 
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = { CascadeType.ALL})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", 
+	    cascade = { 
+	    		CascadeType.MERGE,
+	    		CascadeType.PERSIST,
+	    		CascadeType.REMOVE
+    })
     private List<PhoneNumber> phoneNumbers;
 
 
 
     @ElementCollection
-    @CollectionTable(name="hobbies", joinColumns=@JoinColumn(name="id"))
+    @CollectionTable(name="hobbies", joinColumns = @JoinColumn(name="id"))
     @Column(name="hobby")
     private List<String> hobbies = new ArrayList<>();
 

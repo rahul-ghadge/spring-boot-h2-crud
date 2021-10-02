@@ -29,6 +29,11 @@ public class Address implements Serializable {
     private String postalCode;
 
     @JsonBackReference
-    @OneToOne(mappedBy="address", cascade=CascadeType.ALL)
+    @OneToOne(mappedBy="address", 
+    		cascade = { 
+    	    		CascadeType.MERGE,
+    	    		CascadeType.PERSIST,
+    	    		CascadeType.REMOVE
+    })
     private Employee employee;
 }
