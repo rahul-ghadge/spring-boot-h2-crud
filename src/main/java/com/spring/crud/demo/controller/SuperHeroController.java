@@ -1,6 +1,8 @@
 package com.spring.crud.demo.controller;
 
 
+import com.spring.crud.demo.annotation.LogObjectAfter;
+import com.spring.crud.demo.annotation.LogObjectBefore;
 import com.spring.crud.demo.model.SuperHero;
 import com.spring.crud.demo.service.SuperHeroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ public class SuperHeroController {
     @Autowired
     private SuperHeroService superHeroService;
 
+    @LogObjectAfter
     @GetMapping
     public ResponseEntity<List<?>> findAll() {
         List<?> list = superHeroService.findAll();
@@ -25,6 +28,7 @@ public class SuperHeroController {
     }
 
 
+    @LogObjectAfter
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
         SuperHero superHero = superHeroService.findById(id);
@@ -32,6 +36,8 @@ public class SuperHeroController {
     }
 
 
+    @LogObjectBefore
+    @LogObjectAfter
     @PostMapping
     public ResponseEntity<?> save(@RequestBody SuperHero superHero) {
         SuperHero savedSuperHero = superHeroService.save(superHero);
@@ -46,6 +52,8 @@ public class SuperHeroController {
     }
 
 
+    @LogObjectBefore
+    @LogObjectAfter
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody SuperHero superHero) {
         SuperHero updatedSuperHero = superHeroService.update(id, superHero);

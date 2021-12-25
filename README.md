@@ -58,6 +58,12 @@ Or
         <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
    
+    <!-- update -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-aop</artifactId>
+    </dependency>
+   
     <dependency>
         <groupId>com.h2database</groupId>
         <artifactId>h2</artifactId>
@@ -185,13 +191,22 @@ Or
         private boolean spouse;
     
         @JsonManagedReference
-        @OneToOne(cascade=CascadeType.ALL)
+        @OneToOne(cascade = { 
+                     CascadeType.MERGE,
+                     CascadeType.PERSIST,
+                     CascadeType.REMOVE
+        })
         @JoinColumn(name="address")
         private Address address;
     
     
         @JsonManagedReference
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = { CascadeType.ALL})
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", 
+            cascade = { 
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REMOVE
+        })
         private List<PhoneNumber> phoneNumbers;
     
     
@@ -230,7 +245,12 @@ Or
         private String postalCode;
     
         @JsonBackReference
-        @OneToOne(mappedBy="address", cascade=CascadeType.ALL)
+        @OneToOne(mappedBy="address", 
+                cascade = { 
+                        CascadeType.MERGE,
+                        CascadeType.PERSIST,
+                        CascadeType.REMOVE
+                })
         private Employee employee;
     }
     ```
@@ -261,7 +281,12 @@ Or
     
     }
     ```
-   
+ 
+    #    
+    #### **Update**: New annotations are added in this application to print log smartly with the help of Aspect (LoggerAspect class from aop package).
+    **@LogObjectBefore** - annotation created to print log before method execution <br/>
+    **@LogObjectAfter** - annotation created to print the returned value from method
+    #   
    
    
 4. #### CRUD operation for Super Heroes
@@ -279,15 +304,21 @@ Or
     @RequestMapping("/super-hero")
     public class SuperHeroController {
         
+        @LogObjectAfter
         @GetMapping
         public ResponseEntity<List<?>> findAll();
     
+        @LogObjectAfter
         @GetMapping("/{id}")
         public ResponseEntity<?> findById(@PathVariable String id);
     
+        @LogObjectBefore
+        @LogObjectAfter
         @PostMapping
         public ResponseEntity<?> save(@RequestBody SuperHero superHero);
     
+        @LogObjectBefore
+        @LogObjectAfter
         @PutMapping("/{id}")
         public ResponseEntity<?> update(@PathVariable int id, @RequestBody SuperHero superHero);
     
@@ -356,15 +387,21 @@ Or
    @RequestMapping("/employees")
    public class EmployeeController {
         
+       @LogObjectAfter
        @GetMapping
        public ResponseEntity<List<?>> findAll();
     
+       @LogObjectAfter
        @GetMapping("/{id}")
        public ResponseEntity<?> findById(@PathVariable int id);
     
+       @LogObjectBefore
+       @LogObjectAfter
        @PostMapping
        public ResponseEntity<?> save(@RequestBody Employee employee);
     
+       @LogObjectBefore
+       @LogObjectAfter
        @PutMapping("/{id}")
        public ResponseEntity<?> update(@PathVariable int id, @RequestBody Employee employee);
     
