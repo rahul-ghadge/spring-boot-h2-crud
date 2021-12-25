@@ -1,5 +1,7 @@
 package com.spring.crud.demo.controller;
 
+import com.spring.crud.demo.annotation.LogObjectAfter;
+import com.spring.crud.demo.annotation.LogObjectBefore;
 import com.spring.crud.demo.model.emp.Employee;
 import com.spring.crud.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class EmployeeController {
     @Autowired
     private EmployeeService service;
 
+
+    @LogObjectAfter
     @GetMapping
     public ResponseEntity<List<?>> findAll() {
         List<?> list = service.findAll();
@@ -24,6 +28,7 @@ public class EmployeeController {
     }
 
 
+    @LogObjectAfter
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
         Employee employee = service.findById(id);
@@ -31,6 +36,8 @@ public class EmployeeController {
     }
 
 
+    @LogObjectBefore
+    @LogObjectAfter
     @PostMapping
     public ResponseEntity<?> save(@RequestBody Employee employee) {
         Employee savedEmployee = service.save(employee);
@@ -45,6 +52,8 @@ public class EmployeeController {
     }
 
 
+    @LogObjectBefore
+    @LogObjectAfter
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody Employee employee) {
         Employee updatedEmployee = service.update(id, employee);
